@@ -1,2 +1,2 @@
 # CapsuleSoccerApp
-Deploying the game on Heroku
+Deploying the game on Heroku => https://capsulesoccer.herokuapp.com/
