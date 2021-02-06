@@ -8,6 +8,7 @@ import { socket } from "./Socket";
 import "./Lobby.css"
 import Chat from './Chat'
 import Pool from './Pool'
+import Footer from './Footer'
 
 const Lobby = () => {
     const { userData, setUserData } = useContext(UserContext)
@@ -69,9 +70,7 @@ const Lobby = () => {
             </Row>
             <Row>
                 <Col>
-                    <div className="Footer">
-                        This might be the footer
-                    </div>
+                    <Footer />
                 </Col>
             </Row>
         </Container>

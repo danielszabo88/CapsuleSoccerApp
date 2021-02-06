@@ -1168,10 +1168,13 @@ const Game = () => {
 
     const newMessageSubmit = (e) => {
         e.preventDefault()
-        socket.emit("inGameMsg", {
-            msg: chatMessage,
-            playerno: clientBalls[selfID].no})
-        setChatMessage("")
+        if(clientBalls[selfID]){
+            socket.emit("inGameMsg", {
+                msg: chatMessage,
+                playerno: clientBalls[selfID].no})
+            setChatMessage("")
+        }
+        canvasRef.current.focus();
     }
 
     const quitGame = () => {
@@ -1190,7 +1193,7 @@ const Game = () => {
     return (
         <div>
             <div className="InGameDiv">
-                <canvas id="canvas" ref={canvasRef} width={640} height={480} /> 
+                <canvas id="canvas" ref={canvasRef} tabindex="0" width={640} height={480} /> 
                 <div className="GameFooter">
                     <form id="gamemsg" onSubmit={newMessageSubmit}>
                         <input type="text" name="msg" 

@@ -863,8 +863,8 @@ function renderOnly(){
 //PHYSICS ENGINE ENDS
 //CAPSOC SECTION COMES HERE
 const MAX_SPEED = 4
-const ANG_KEYFORCE = 0.084
-const ANG_FRICTION = 0.016
+const ANG_KEYFORCE = 0.07
+const ANG_FRICTION = 0.015
 
 buildStadium();
 let serverBalls = {};

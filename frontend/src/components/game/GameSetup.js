@@ -39,12 +39,12 @@ const GameSetup = () => {
     return (
         <div>
             <div className="GameSetupContent">
+                <span style={{fontSize: "10px"}}>{gameInfo.room}</span>
                 <h1>IT'S A MATCH!</h1>
                 <br/>
                 {(gameInfo.p1name) ? <h2>{gameInfo.p1name}</h2> : <h2>. . .</h2>}
                 <h3>vs.</h3>
                 {(gameInfo.p2name) ? <h2>{gameInfo.p2name}</h2> : <h2>. . .</h2>}
-                <span style={{fontSize: "10px"}}>{gameInfo.room}</span>
                 <br/>
                 <h1>Both of you want to play?</h1>
                 <div className="ButtonSection">

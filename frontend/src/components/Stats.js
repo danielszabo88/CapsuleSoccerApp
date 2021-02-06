@@ -40,7 +40,7 @@ const Stats = () => {
                         <h4>And won <span style={{color:"red"}}>{userStats.gamesWon}</span> of them.</h4>
                         <h2>Nice.</h2>
                         <h4>You've received <span style={{color:"red"}}>{userStats.pointsFor}</span> Points altogether.</h4>
-                        <h4>Your opponents have received <span style={{color:"red"}}>{userStats.pointsFor}</span>.</h4>
+                        <h4>Your opponents have received <span style={{color:"red"}}>{userStats.pointsAgainst}</span>.</h4>
                         <h4>Last time you played with <span style={{color:"red"}}>{userStats.lastOpponent}</span></h4>
                         {(userStats.lastGame) ? 
                             (<h2><span style={{color:"red"}}>And You Won!</span></h2>)
@@ -52,10 +52,10 @@ const Stats = () => {
                     :
                     <div>
                         <h2>No Game, No Stats...</h2>
-                        <br/>
+                        <br/><br/>
                         <h2>¯\_(ツ)_/¯</h2>
-                        <br/>
-                        <h6>(or maybe it's just loading...)</h6>
+                        <br/><br/>
+                        <h6>(it's either still loading your data or you've never ever played a game)</h6>
                     </div>
                 }
                 
