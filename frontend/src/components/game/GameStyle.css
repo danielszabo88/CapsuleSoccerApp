@@ -1,0 +1,80 @@
+#canvas{
+    background: #fffacc;
+}
+.InGameDiv{
+    padding: 0;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 1px solid black;   
+    width: 640px;
+    height: 530px;
+    background: #dadada;
+}
+.GameFooter{
+    display: flex;
+}
+#gamemsg{
+    flex: 1;
+}
+.QuitButton{
+    margin-left: 4px;
+    margin-right: 2px;
+    margin-bottom: 10px;
+}
+.QuitButton:hover{
+    background-color: black;
+}
+.GameSetupContent, .GameOverContent{
+    width: 640px;
+    height: 480px;
+    text-align: center;
+    padding: 20px;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 1px solid black;
+    background: #fffacc;
+}
+.ButtonSection{
+    display: flex;
+    justify-content: space-between;
+    margin: 30px auto;
+    padding-top: 50px;
+    width: 80%;
+}
+.LobbyButton{
+    background-color: darkkhaki;
+    border-color: darkolivegreen;
+    height: 50px;
+    width: 120px;
+    border-radius: 25px;
+}
+.LobbyButton:hover{
+    background-color: darkolivegreen;
+    border-color: darkolivegreen;
+}
+.PlayButton{
+    background-color: red;
+    border-color: palevioletred;
+    height: 50px;
+    width: 120px;
+    border-radius: 25px;
+}
+.PlayButton:hover{
+    background-color: rgb(255, 0, 191);
+    border-color: rgb(255, 166, 0);
+}
+.WinnerName{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    color: red;
+}

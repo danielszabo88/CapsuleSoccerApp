@@ -1,0 +1,75 @@
+GET http://localhost:5000/api/users/register 
+
+###
+
+GET http://localhost:5000/api/users/profile
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmRjOWFiZDAwY2FlYjE0YWM5Zjk4OTQiLCJpYXQiOjE2MDgyOTMwNzN9.r4ZMnLL-JovWsPl_jcPu1m-nofH5xhkH0g1YrextEyc
+
+###
+
+DELETE http://localhost:5000/api/users/profile
+auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmRhMmE4NGU2NWRlMjE4NzhkZTljMzAiLCJpYXQiOjE2MDgyODM3NzZ9.lJ9Y9Mu0EzSksRpmnz0dTG1ig_6pNMHBbeJmgfLc8n0
+
+###
+
+POST http://localhost:5000/api/users/register 
+Content-Type: application/json
+
+{
+    "name": "Adam",
+    "password": "First"
+}
+
+###
+
+DELETE http://localhost:5000/api/users/5fda5317d648e0050469fa81
+
+###
+
+GET http://localhost:5000/api/users/login
+
+
+###
+
+POST http://localhost:5000/api/users/login
+Content-Type: application/json
+
+{
+    "name": "Adam",
+    "password": "First"
+}
+
+###
+
+
+GET http://localhost:5000/api/fruits
+
+###
+
+POST http://localhost:5000/api/fruits
+Content-Type: application/json
+
+{
+    "name": "Carrot",
+    "amount": 5,
+    "info": "Not a Fruit"
+}
+
+###
+
+DELETE http://localhost:5000/api/fruits/5fba4ab559003a0c88bbd503
+
+###
+
+PUT http://localhost:5000/api/fruits/5fba4aaa59003a0c88bbd502
+Content-Type: application/json
+
+{
+    "name": "Banana",
+    "amount": 3,
+    "info": "Yellow Gentleman"
+}
+
+###
+
+POST http://localhost:5000/api/users/tokenIsValid

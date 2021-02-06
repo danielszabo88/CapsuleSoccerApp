@@ -1,0 +1,211 @@
+/* *{
+    border: 1px solid black;
+} */
+
+.MainScreen{
+    height: 100vh;
+    max-height: 100%;
+}
+
+.Header{
+    border: 1px solid black;
+    padding: 1%;
+    text-align: center;
+    margin: 2px;
+    border-radius: 100px;
+    background-color: #fffacc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.HeaderTitle{
+    border-radius: 15px;
+    font-family: 'Brush Script MT', cursive;
+    padding: 5px;
+    margin: 5px;
+    font-weight: bolder;
+    background-image: linear-gradient(to right, lightblue , lightgreen);
+}
+
+.BigRedBall{
+    background: red;
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+    margin: 0;
+    border: 1px solid red;
+}
+
+.HeaderCenter{
+    width: 60%;
+    font-size: large;
+}
+
+.HeaderLinks{
+    display: flex;
+    justify-content: space-between;
+}
+
+.StatButton{
+    background-color: darkkhaki;
+    border-color: darkolivegreen;
+}
+
+.StatButton:hover, .StatBackButton:hover{
+    background-color: darkolivegreen;
+    border-color: darkolivegreen;
+}
+
+.StatContent{
+    width: 640px;
+    height: 480px;
+    text-align: center;
+    padding: 20px;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 1px solid black;
+    background: #fffacc;
+}
+
+.StatBackButton{
+    background-color: darkkhaki;
+    border-color: darkolivegreen;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 30px;
+}
+
+.StatText{
+    margin: 5px;
+    padding: 10px;
+}
+
+.LogOutButton{
+    background-color: darkgrey;
+    border-color: black;
+}
+
+.LogOutButton:hover{
+    background-color: black;
+    border-color: black;
+}
+
+.ChatBlock{
+    border: 1px solid black;
+    padding: 4%; 
+    margin: 2px; 
+    background-color: lightblue;
+    border-radius: 10px;
+}
+
+.ChatHeader{
+    text-align: center; 
+}
+
+.ChatComponent{
+    height: 100%;
+}
+
+.ChatMessages{
+    border: 1px solid black;
+    background-color: #fcfcfc;
+    overflow: scroll;
+    height: 78%;
+}
+
+.PoolBlock{
+    border: 1px solid black;
+    padding: 4%; 
+    margin: 2px;  
+    background-color: lightgreen;
+    border-radius: 10px;
+}
+
+.PoolComponent{
+    height: 100%;
+}
+
+.PoolHeader{
+    text-align: center;
+}
+
+.UserListWrapper{
+    overflow: scroll;
+    height: 75%;
+}
+
+.SearchBar{
+    margin: 15px auto;
+    width: 100%;
+}
+
+.PoolElem{
+    background-color: #fcfcfc;
+    border: 1px solid darkolivegreen;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1px;
+    transition: background-color 0.5s ease;
+}
+
+.Disabled{
+    background-color: #e7abab;
+    border: 1px solid darkolivegreen;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1px;
+}
+
+.PoolElem:hover{
+    background-color: #dddddd
+}
+
+.PoolElemInfo{
+    margin-left: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.PoolElemButton{
+    margin-right: 10px;
+}
+
+.Footer{
+    border: 1px solid black;
+    padding: 4%;
+    text-align: center;  
+    margin: 2px; 
+    background-color: #fffacc;
+    border-radius: 10px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: lightgrey; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: grey; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b4b090; 
+  }
