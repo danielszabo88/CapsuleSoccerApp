@@ -882,14 +882,15 @@ setInterval(serverLoop, 1000/60);
 function connected(socket){
     //For Chat Only
     socket.on("newChatMessage", newMessage => {
-        io.emit("newChatMessage", { name: newMessage.name, msg: newMessage.msg, isPrivate: newMessage.isPrivate})
+        io.emit("newChatMessage", { name: newMessage.name, msg: newMessage.msg})
     })
     //For Game Preparation
     socket.on("setPlayerName", username => {
+        console.log("Just came: ", username)
         users[socket.id] = username
         userToRoom[username] = 0
         socket.join(username)
-        console.log("UserToRoom: ", userToRoom)
+        console.log("HENCE UserToRoom: ", userToRoom)
         io.emit("userList", userToRoom)
     })
     socket.on("logoutUser", username => {
@@ -909,6 +910,7 @@ function connected(socket){
         let minRoom = 0
         console.log("Finding minroom, where length from 1 to ",Object.keys(roomData).length+1)
         console.log("Roomdata before looping: ",roomData)
+        console.log("BODIES: ",BODIES.length)
         for(let i=1; i<=Object.keys(roomData).length+1; i++){
             if(minRoom === 0 && roomData[i] === undefined){
                 minRoom = i
@@ -942,69 +944,87 @@ function connected(socket){
         roomData[minRoom].ballX = 320
         roomData[minRoom].ballY = 280
     })
-    socket.on("RequestGameInfo", id => {
-        let roomById = userToRoom[users[id]]
-        console.log("RoomByID (for provide game info) ", roomById)
-        io.to(roomById).emit("ProvideGameInfo", {
-            p1name: roomData[roomById].p1name,
-            p2name: roomData[roomById].p2name,
-            room: roomById
-        })
+    socket.on("RequestGameInfo", () => {
+        let roomById;
+        //for the case the user enters the URL directly and has no room
+        if(!userToRoom[users[socket.id]]){
+            socket.emit("redirectToLobby")
+        } else {
+            roomById = userToRoom[users[socket.id]]
+            console.log("RoomByID (for provide game info) ", roomById)
+            io.to(roomById).emit("ProvideGameInfo", {
+                p1name: roomData[roomById].p1name,
+                p2name: roomData[roomById].p2name,
+                room: roomById
+            })
+        }
     })
     socket.on("gameConfirm", confirm => {
-        let roomById = userToRoom[users[socket.id]]
-        if(confirm === false){
-            console.log("......gameconfirm FALSE for socket ",socket.id)
-            console.log("Socket leaves room ",roomById)
-            socket.leave(roomById)
-            console.log("delete userToRoom: ",userToRoom[users[socket.id]])
-            delete userToRoom[users[socket.id]]
-            io.to(roomById).emit("gameConfirm", false);
+        let roomById;
+        //for the case the user enters the URL directly and has no room
+        if(!userToRoom[users[socket.id]]){
+            socket.emit("redirectToLobby")
         } else {
-            console.log("Wanna play again: ", users[socket.id])
-            console.log("Roomdata: ", roomData[roomById])
+            roomById = userToRoom[users[socket.id]]
+            if(confirm === false){
+                console.log("......gameconfirm FALSE for socket ",socket.id)
+                console.log("Socket leaves room ",roomById)
+                socket.leave(roomById)
+                console.log("delete userToRoom: ",userToRoom[users[socket.id]])
+                delete userToRoom[users[socket.id]]
+                io.to(roomById).emit("gameConfirm", false);
+            } else {
+                console.log("Wanna play again: ", users[socket.id])
+                console.log("Roomdata: ", roomData[roomById])
+            }
         }
     })
     socket.on("componentReady", () => {
-        console.log("COMPOENT IS READY, ",socket.id)
-        roomNo = userToRoom[users[socket.id]]
-        socket.join(roomNo);
-        if(socket.id === roomData[roomNo].p1ID){
-            roomData[roomNo].p1ready = true
-            serverBalls[socket.id] = new Capsule(80, 280, 150, 280, 25, 10);
-            serverBalls[socket.id].no = 1;
-            serverBalls[socket.id].layer = roomNo;
-        }
-        if(socket.id === roomData[roomNo].p2ID){
-            roomData[roomNo].p2ready = true
-            serverBalls[socket.id] = new Capsule(560, 280, 490, 280, 25, 10);
-            serverBalls[socket.id].no = 2;
-            serverBalls[socket.id].layer = roomNo;
-        }
-        console.log("Creating SERVERBALLS")
-        serverBalls[socket.id].maxSpeed = MAX_SPEED;
-        serverBalls[socket.id].angFriction = ANG_FRICTION;
-        serverBalls[socket.id].angKeyForce = ANG_KEYFORCE;
+        let roomById;
+        //for the case the user enters the URL directly and has no room
+        if(!userToRoom[users[socket.id]]){
+            socket.emit("redirectToLobby")
+        } else {
+            roomById = userToRoom[users[socket.id]]
+            console.log("COMPOENT IS READY, ",socket.id)
+            socket.join(roomById);
+            if(socket.id === roomData[roomById].p1ID){
+                roomData[roomById].p1ready = true
+                serverBalls[socket.id] = new Capsule(80, 280, 150, 280, 25, 10);
+                serverBalls[socket.id].no = 1;
+                serverBalls[socket.id].layer = roomById;
+            }
+            if(socket.id === roomData[roomById].p2ID){
+                roomData[roomById].p2ready = true
+                serverBalls[socket.id] = new Capsule(560, 280, 490, 280, 25, 10);
+                serverBalls[socket.id].no = 2;
+                serverBalls[socket.id].layer = roomById;
+            }
+            console.log("Creating SERVERBALLS")
+            serverBalls[socket.id].maxSpeed = MAX_SPEED;
+            serverBalls[socket.id].angFriction = ANG_FRICTION;
+            serverBalls[socket.id].angKeyForce = ANG_KEYFORCE;
 
-        if(roomData[roomNo].p1ready === true && roomData[roomNo].p2ready === true){
-            football[roomNo] = new Ball(320, 280, 20, 6);
-            football[roomNo].layer = roomNo;
-            gameIsOn[roomNo] = true;
-            console.log("STUFF EMITTED TO ROOM ",roomNo)
-            console.log("roomData (actual emit): ",roomData[roomNo])
-            console.log("Users: ",users)
-            console.log("UserToRoom: ",userToRoom)
-            console.log("finalresult: ", finalResult[roomNo])
-            io.to(roomNo).emit('gameSetup', roomData[roomNo]);
+            if(roomData[roomById].p1ready === true && roomData[roomById].p2ready === true){
+                football[roomById] = new Ball(320, 280, 20, 6);
+                football[roomById].layer = roomById;
+                gameIsOn[roomById] = true;
+                console.log("STUFF EMITTED TO ROOM ",roomById)
+                console.log("roomData (actual emit): ",roomData[roomById])
+                console.log("Users: ",users)
+                console.log("UserToRoom: ",userToRoom)
+                console.log("finalresult: ", finalResult[roomById])
+                io.to(roomById).emit('gameSetup', roomData[roomById]);
+            }
+            
+        socket.on('userCommands', data => {
+                serverBalls[socket.id].left = data.left;
+                serverBalls[socket.id].up = data.up;
+                serverBalls[socket.id].right = data.right;
+                serverBalls[socket.id].down = data.down;
+                serverBalls[socket.id].action = data.action;
+            })
         }
-        
-      socket.on('userCommands', data => {
-            serverBalls[socket.id].left = data.left;
-            serverBalls[socket.id].up = data.up;
-            serverBalls[socket.id].right = data.right;
-            serverBalls[socket.id].down = data.down;
-            serverBalls[socket.id].action = data.action;
-        })
     })
     socket.on("RequestFinalResult", id => {
         let roomById = userToRoom[users[id]]
@@ -1046,6 +1066,9 @@ function connected(socket){
     socket.on("cleanUpRoom", () => {
         console.log("TIME TO CLEAN UP")
         console.log("BODIES: ",BODIES.length)
+        console.log("cleanup from id ",socket.id)
+        console.log("cleanup from user ",users[socket.id])
+        console.log("cleanup from room ",userToRoom[users[socket.id]])
         if(userToRoom[users[socket.id]]){
             let roomById = userToRoom[users[socket.id]]
             if(gameIsOn[roomById]){
@@ -1065,9 +1088,6 @@ function connected(socket){
                 football[roomById].remove()
                 delete football[roomById];
             }
-            //console.log("Deleted SERVERBALLS")
-            //console.log("......cleanin up room after socket ",socket.id)
-            //console.log("Socket leaves room ",roomById)
             socket.leave(roomById)
             //console.log("delete userToRoom: ",userToRoom[users[socket.id]])
             delete userToRoom[users[socket.id]]
@@ -1087,19 +1107,35 @@ function connected(socket){
         })
     })
 
-    socket.on('disconnect', function(){
+    socket.on('disconnect', () => {
         console.log("DISCONNECTION for ",socket.id)
-        if(serverBalls[socket.id]){
-            if(football[serverBalls[socket.id].layer]){
-                football[serverBalls[socket.id].layer].remove();
-                delete football[football[serverBalls[socket.id].layer]];
-                serverBalls[socket.id].remove();
-                io.to(serverBalls[socket.id].layer).emit('deletePlayer', socket.id);
-                gameIsOn[serverBalls[socket.id].layer] = false
-                delete roomData[serverBalls[socket.id].layer];
-                delete serverBalls[socket.id];
+        console.log("disconn users: ",users)
+        console.log("disconn userToRoom: ",userToRoom)
+            if(userToRoom[users[socket.id]]){
+                let roomById = userToRoom[users[socket.id]]
+                console.log("disconn for room ",roomById)
+                gameIsOn[roomById] = false     
+                console.log("roomData before disconn: ", roomData)          
+                io.to(roomById).emit('deletePlayer', socket.id);
+                //deleting all the serverballs in the room if someone disconnects
+                //otherwise they might sty in the same room for the next two players
+                let usernames = Object.keys(users)
+                for (let id of usernames) {
+                    if(userToRoom[users[id]] === roomById){
+                        console.log("serverball delete for "+users[id]+" = "+id)
+                        serverBalls[id].remove();
+                        delete serverBalls[id];
+                    }
+                }
+                if(football[roomById]){
+                    football[roomById].remove()
+                    delete football[roomById];
+                }
+                //io.to(roomById).emit("gameConfirm", false);
+                delete roomData[roomById];
+            } else {
+                console.log("nothing here")
             }
-        }
         delete users[socket.id]
         //checking if this was the last connected socket for any user
         for (let userToRoomKey of Object.keys(userToRoom)) {
@@ -1109,7 +1145,6 @@ function connected(socket){
             }
         }
         io.emit("userList", userToRoom)
-        //io.emit("userList", [...new Set(Object.values(users))])
     })
 }
 

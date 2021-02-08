@@ -29,7 +29,7 @@ const Chat = () => {
     }
 
     socket.on("newChatMessage", newMessage => {
-        setMsgList([...msgList, {name: newMessage.name, msg: newMessage.msg, isPrivate: newMessage.isPrivate}])
+        setMsgList([...msgList, {name: newMessage.name, msg: newMessage.msg}])
     })
 
     return (
@@ -48,9 +48,7 @@ const Chat = () => {
                         <li key={index}>
                         <b>{msgList.name}: </b>
                             <i>
-                                <span style={{color: msgList.isPrivate ? "red" : "black"}}>
-                                    {msgList.msg}
-                                </span>
+                                {msgList.msg}
                             </i>
                         </li>
                     )

@@ -58,7 +58,7 @@ router.put("/profile", auth, async (req, res) => {
           "stats.pointsAgainst": req.body.oppPoint,
       }}
     );
-    console.log("Should be ok, check mongo!!!!!!!!!!!!!!!!!!!!!!")
+    console.log("Should be ok, check mongo!!!")
   } catch(err) {
       console.error(err.message);
       res.send(400).send('Server Error');

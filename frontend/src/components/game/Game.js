@@ -981,7 +981,6 @@ const Game = () => {
                 football.color = "red";
                 if(gameReady === false){
                     gameReady = true
-                    console.log("Bodies: ", BODIES.length)
                     countDown()
                 }
                 userInput(clientBalls[selfID]);
@@ -1005,7 +1004,6 @@ const Game = () => {
                 }
                 if(newScore.gameWin !== 0){
                     document.body.style.backgroundColor = "white";
-                    console.log("game stops")
                     gameReady = false
                     history.push("/gameover");                
                 }                     
@@ -1024,12 +1022,22 @@ const Game = () => {
                     history.push("/");
                 }
             })
+
+            //if someone came to the URL directly
+            socket.on("redirectToLobby", () => {
+                history.push("/");
+            })
             
             socket.on('deletePlayer', playerID => {
                 if(clientBalls[playerID]){
                     clientBalls[playerID].remove();
                     delete clientBalls[playerID];
+                    clientBalls[selfID].remove();
+                    delete clientBalls[selfID];
                     football.remove();
+                    gameReady = false
+                    socket.emit("gameConfirm", false)
+                    history.push("/");
                     //delete football;
                 }
             })

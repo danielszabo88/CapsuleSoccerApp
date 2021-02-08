@@ -73,6 +73,11 @@ const GameOver = () => {
         }
     })
 
+    //if someone came to the URL directly
+    socket.on("redirectToLobby", () => {
+        history.push("/");
+    })
+
     const goBack = () => {
         socket.emit("gameConfirm", false)
         history.push("/");

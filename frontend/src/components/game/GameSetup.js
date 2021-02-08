@@ -11,7 +11,7 @@ const GameSetup = () => {
     const history = useHistory()
     useEffect (() => {
         console.log("GAMESETTING EMIT: ",socket.id)
-        socket.emit("RequestGameInfo", socket.id)
+        socket.emit("RequestGameInfo")
     }, [])
 
     socket.on("ProvideGameInfo", data => {
@@ -20,9 +20,14 @@ const GameSetup = () => {
 
     socket.on("gameConfirm", confirmed => {
         if(!confirmed){
+            console.log("delete room")
             socket.emit("cleanUpRoom")
             history.push("/");
         }
+    })
+
+    socket.on("redirectToLobby", () => {
+        history.push("/");
     })
 
     const goBack = () => {
