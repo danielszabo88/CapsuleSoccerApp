@@ -1,4 +1,4 @@
-const socket = io.connect('http://localhost:5500');
+const socket = io.connect();
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
