@@ -10,8 +10,8 @@ const gameAreaDiv = document.getElementById('gameArea');
 buildStadium();
 let football;
 let clientBalls = {};
-let selfID, p1ID, p2ID
-let countDownSec = 0
+let selfID, p1ID, p2ID;
+let countDownSec = 0;
 
 socket.on('gameSetup', data => {
     selfID = socket.id
